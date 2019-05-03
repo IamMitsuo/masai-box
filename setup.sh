@@ -8,6 +8,7 @@ VENV_DIR="$MASAI_ROOT_DIR/venv"
 MASAI_SRC_DIR="$MASAI_ROOT_DIR/masai/"
 VFEED_SRC_DIR="$MASAI_ROOT_DIR/vfeed/"
 BLUEZ_SERVICE_PATH="/etc/systemd/system/dbus-org.bluez.service"
+QR_CODE_GENERATOR_PATH=$MASAI_ROOT_DIR/qrcode_generator.py
 
 # Check if there is internet connection, otherwise exit with code 1
 wget --spider --quiet http://www.google.com
