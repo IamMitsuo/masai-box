@@ -23,10 +23,10 @@ if [ $? -eq 0 ]
 		exit 1
 fi
 
-# Move wordlist, password, and login to /usr/share/dict
-mv WORDLIST_PATH /usr/share/dict/
-mv PASSWORD_PATH /usr/share/dict/
-mv LOGIN_PATH /usr/share/dict/
+# Copy wordlist, password, and login to /usr/share/dict
+cp WORDLIST_PATH /usr/share/dict/
+cp PASSWORD_PATH /usr/share/dict/
+cp LOGIN_PATH /usr/share/dict/
 
 # Download vfeed.db first if it does not exist
 if ! [ -e $VFEED_DB_PATH ]
