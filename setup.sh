@@ -24,7 +24,7 @@ if ! [ -e $VFEED_DB_PATH ]
 	then
 		echo "[INFO] vfeed.db does not exist"
 		echo "[DOWNLOAD] Start downloading from https://github.com/IamMitsuo/masai-box/releases/download/v0.1-alpha/vfeed.db"
-#		wget -O $VFEED_DB_PATH https://github.com/IamMitsuo/masai-box/releases/download/v0.1-alpha/vfeed.db
+		wget -O $VFEED_DB_PATH https://github.com/IamMitsuo/masai-box/releases/download/v0.1-alpha/vfeed.db
 		echo "[INFO] Downloading process finished."
 	else
 		echo "[INFO] vfeed.db exists, skip downloading"
