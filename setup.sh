@@ -130,8 +130,10 @@ fi
 
 echo "[INFO] Finish required system packages installation"
 
-echo "[INFO] Start installing python libraries from requirements.txt"
-pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -r requirements.txt
+echo "[INFO] Start installing xmltodict, pyqrcode and pypng"
+pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org xmltodict
+pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pyqrcode
+pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pypng
 
 echo "[INFO] Start installing PyblueZ"
 pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org git+https://github.com/pybluez/pybluez.git
