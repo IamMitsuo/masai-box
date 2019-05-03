@@ -115,7 +115,7 @@ echo "[INFO] venv has been activated"
 
 # Download debian packages required for python libraries
 echo "[INFO] Install required system packages"
-apt-get install libbluetooth-dev\
+apt-get install -y libbluetooth-dev\
  python-dev\
  libglib2.0-dev\
  libboost-python-dev\
