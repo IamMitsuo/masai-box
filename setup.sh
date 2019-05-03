@@ -9,6 +9,9 @@ MASAI_SRC_DIR="$MASAI_ROOT_DIR/masai/"
 VFEED_SRC_DIR="$MASAI_ROOT_DIR/vfeed/"
 BLUEZ_SERVICE_PATH="/etc/systemd/system/dbus-org.bluez.service"
 QR_CODE_GENERATOR_PATH=$MASAI_ROOT_DIR/qrcode_generator.py
+WORDLIST_PATH=$MASAI_ROOT_DIR/wordlists/wordlist.txt
+PASSWORD_PATH=$MASAI_ROOT_DIR/wordlists/password.txt
+LOGIN_PATH=$MASAI_ROOT_DIR/wordlists/login.txt
 
 # Check if there is internet connection, otherwise exit with code 1
 wget --spider --quiet http://www.google.com
@@ -19,6 +22,11 @@ if [ $? -eq 0 ]
 		echo "[ERROR] No Internet connection. Exit with code 1" >&2
 		exit 1
 fi
+
+# Move wordlist, password, and login to /usr/share/dict
+mv WORDLIST_PATH /usr/share/dict/
+mv PASSWORD_PATH /usr/share/dict/
+mv LOGIN_PATH /usr/share/dict/
 
 # Download vfeed.db first if it does not exist
 if ! [ -e $VFEED_DB_PATH ]

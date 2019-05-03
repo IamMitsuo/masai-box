@@ -104,7 +104,7 @@ class Configuration(object):
                 break
 
         password_lists = [
-            '/usr/share/dict/password1000.txt'
+            '/usr/share/dict/password100.txt'
         ]
         username_lists = [
             '/usr/share/dict/login_small.txt'
