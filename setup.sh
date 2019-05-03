@@ -169,4 +169,7 @@ systemctl daemon-reload
 systemctl restart bluetooth
 
 # Generate QR Code
+echo "[INFO] Generate QR Code"
 python qrcode_generator.py
+echo "[INFO] Finish QR Code generation"
+echo "[FINISH] Finish Setup MASai Box. You can start masai box by connecting the monitorable external Wi-Fi adapter and running the following command: ./run.sh"
