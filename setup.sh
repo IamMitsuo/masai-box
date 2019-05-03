@@ -24,9 +24,9 @@ if [ $? -eq 0 ]
 fi
 
 # Copy wordlist, password, and login to /usr/share/dict
-cp WORDLIST_PATH /usr/share/dict/
-cp PASSWORD_PATH /usr/share/dict/
-cp LOGIN_PATH /usr/share/dict/
+cp $WORDLIST_PATH /usr/share/dict/
+cp $PASSWORD_PATH /usr/share/dict/
+cp $LOGIN_PATH /usr/share/dict/
 
 # Download vfeed.db first if it does not exist
 if ! [ -e $VFEED_DB_PATH ]
