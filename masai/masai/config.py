@@ -139,7 +139,7 @@ class Configuration(object):
         cls.crack_handshake = False
 
         # Overwrite config values with arguments (if defined)
-        cls.load_from_arguments()
+        #cls.load_from_arguments()
 
         if load_interface:
             cls.get_monitor_mode_interface()

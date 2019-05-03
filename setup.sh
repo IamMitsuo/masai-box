@@ -5,6 +5,8 @@ MASAI_ROOT_DIR=$(dirname "$SETUP_PATH")
 VFEED_DIR="$MASAI_ROOT_DIR/vfeed/vfeed"
 VFEED_DB_PATH="$VFEED_DIR/vfeed.db"
 VENV_DIR="$MASAI_ROOT_DIR/venv"
+MASAI_SRC_DIR="$MASAI_ROOT_DIR/masai/"
+VFEED_SRC_DIR="$MASAI_ROOT_DIR/vfeed/"
 
 # Check if there is internet connection, otherwise exit with code 1
 wget --spider --quiet http://www.google.com
@@ -65,6 +67,11 @@ else
 	echo "[INFO] pip3 is found"
 fi
 
+# Upgrade pip3 to the newest version
+echo "[INFO] Upgrade pip3 to the newest version"
+pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip --upgrade
+echo "[INFO] Finish Upgrade"
+
 # Check if there exists venv directory, otherwise install venv
 if ! [ -e $VENV_DIR ]; then
 	echo "[WARNING] venv does not exist"
@@ -81,7 +88,7 @@ pip3 list | grep virtualenv
 if ! [ $? -eq 0 ]; then
 	echo "[WARNING] virtualenv is not installed."
 	echo "[INFO] Start install virtualenv"
-	pip3 install --trusted-host pypi.org --trusted-host files.pythonhosted.org virtualenv
+	pip3 install --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org virtualenv
 	echo "[INFO] Finish virtualenv installation"
 else
 	echo "[INFO] virtualenv is found"
@@ -90,3 +97,47 @@ fi
 # Create virtualenv to venv directory
 echo "[INFO] Running python3 -m virtualenv $VENV_DIR"
 python3 -m virtualenv $VENV_DIR
+
+# Activate virtualenv on venv directory
+echo "[INFO] activate virtualenv on venv directory"
+source $VENV_DIR/bin/activate
+echo "[INFO] venv has been activated"
+
+# Download debian packages required for python libraries
+echo "[INFO] Install required system packages"
+apt-get install libbluetooth-dev\
+ python-dev\
+ libglib2.0-dev\
+ libboost-python-dev\
+ libboost-thread-dev\
+ libffi-dev\
+ libssl-dev\
+
+if ! [ $? -eq 0 ]; then
+	echo "[ERROR] Unsuccefully install some packages" >&2
+	exit 1
+fi
+
+echo "[INFO] Finish required system packages installation"
+
+echo "[INFO] Start installing python libraries from requirements.txt"
+pip install -r requirements.txt
+
+if ! [ $? -eq 0 ]; then
+	echo "[ERROR] Python libraries installation from requirements.txt failed" >&2
+	exit 1
+fi
+echo "[INFO] Finish Python libraries installation from requirements.txt"
+echo "[INFO] Start installing masai and vfeed in development"
+pip install -e $MASAI_SRC_DIR
+pip install -e $VFEED_SRC_DIR
+echo "[INFO] Finish masai and vfeed installation"
+echo "[INFO] Start installing pwntools"
+pip install --upgrade git+https://github.com/arthaud/python3-pwntools.git
+echo "[INFO] Finish pwntools installation"
+
+# Fix Bluetooth service
+#echo "[INFO] Fix Bluetooth service by chaning /etc/systemd/system/dbus-org.bluez.service"
+#mv /etc/systemd/system/dbus-org.bluez.service /etc/systemd/system/dbus-org.bluez.service_tmp
+#sed 's/\/bluetoothd/\/bluetoothd -C/g' /etc/systemd/system/dbus-org.bluez.service_tmp > /etc/systemd/system/dbus-org.bluez.service
+#cat /etc/systemd/system/dbus-org.bluez.service
