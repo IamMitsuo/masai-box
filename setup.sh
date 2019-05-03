@@ -131,10 +131,10 @@ fi
 echo "[INFO] Finish required system packages installation"
 
 echo "[INFO] Start installing python libraries from requirements.txt"
-pip install -r requirements.txt
+pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -r requirements.txt
 
 echo "[INFO] Start installing PyblueZ"
-pip install git+https://github.com/pybluez/pybluez.git
+pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org git+https://github.com/pybluez/pybluez.git
 
 if ! [ $? -eq 0 ]; then
 	echo "[ERROR] Python libraries installation from requirements.txt failed" >&2
@@ -146,7 +146,7 @@ pip install -e $MASAI_SRC_DIR
 pip install -e $VFEED_SRC_DIR
 echo "[INFO] Finish masai and vfeed installation"
 echo "[INFO] Start installing pwntools"
-pip install --upgrade git+https://github.com/arthaud/python3-pwntools.git
+pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --upgrade git+https://github.com/arthaud/python3-pwntools.git
 echo "[INFO] Finish pwntools installation"
 
 # Fix Bluetooth service
