@@ -51,6 +51,7 @@ class MasaiServer(object):
 		
 		wifi_connection_manager = WifiConnectionManager()
 		Process.call('bluetoothctl discoverable on')
+		Process.call('hciconfig hci0 piscan')
 		
 		Configuration.initialize(False)
 		Configuration.ignore_old_handshakes = True
