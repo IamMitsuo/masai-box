@@ -11,7 +11,7 @@ from masai.config import Configuration
 
 import time
 
-class AttackWep(Attack):
+class AttackWEP(Attack):
     '''
         Contains logic for attacking a WEP-encrypted access point.
     '''
@@ -19,7 +19,7 @@ class AttackWep(Attack):
     fakeauth_wait = 6
 
     def __init__(self, target):
-        super(AttackWep, self).__init__(target)
+        super(AttackWEP, self).__init__(target)
         self.crack_result = None
         self.success = False
 

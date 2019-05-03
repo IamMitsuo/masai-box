@@ -1,7 +1,6 @@
 import json
 import bluetooth
 from masai.attack.wep import AttackWEP
-from masai.attack.mywep import MyAttackWep
 from masai.attack.wpa import AttackWPA
 from masai.attack.scandevice import ScanDevice
 from masai.attack.portassessment import PortAssessment
