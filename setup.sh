@@ -158,3 +158,6 @@ sdptool add SP
 echo "[INFO] Restarting bluetooth service"
 systemctl daemon-reload
 systemctl restart bluetooth
+
+# Generate QR Code
+python qrcode_generator.py
