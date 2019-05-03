@@ -124,6 +124,9 @@ echo "[INFO] Finish required system packages installation"
 echo "[INFO] Start installing python libraries from requirements.txt"
 pip install -r requirements.txt
 
+echo "[INFO] Start installing PyblueZ"
+pip install git+https://github.com/pybluez/pybluez.git
+
 if ! [ $? -eq 0 ]; then
 	echo "[ERROR] Python libraries installation from requirements.txt failed" >&2
 	exit 1
