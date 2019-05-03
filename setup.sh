@@ -7,6 +7,7 @@ VFEED_DB_PATH="$VFEED_DIR/vfeed.db"
 VENV_DIR="$MASAI_ROOT_DIR/venv"
 MASAI_SRC_DIR="$MASAI_ROOT_DIR/masai/"
 VFEED_SRC_DIR="$MASAI_ROOT_DIR/vfeed/"
+BLUEZ_SERVICE_PATH="/etc/systemd/system/dbus-org.bluez.service"
 
 # Check if there is internet connection, otherwise exit with code 1
 wget --spider --quiet http://www.google.com
@@ -23,7 +24,7 @@ if ! [ -e $VFEED_DB_PATH ]
 	then
 		echo "[INFO] vfeed.db does not exist"
 		echo "[DOWNLOAD] Start downloading from https://github.com/IamMitsuo/masai-box/releases/download/v0.1-alpha/vfeed.db"
-		wget -O $VFEED_DB_PATH https://github.com/IamMitsuo/masai-box/releases/download/v0.1-alpha/vfeed.db
+#		wget -O $VFEED_DB_PATH https://github.com/IamMitsuo/masai-box/releases/download/v0.1-alpha/vfeed.db
 		echo "[INFO] Downloading process finished."
 	else
 		echo "[INFO] vfeed.db exists, skip downloading"
@@ -137,7 +138,20 @@ pip install --upgrade git+https://github.com/arthaud/python3-pwntools.git
 echo "[INFO] Finish pwntools installation"
 
 # Fix Bluetooth service
-#echo "[INFO] Fix Bluetooth service by chaning /etc/systemd/system/dbus-org.bluez.service"
-#mv /etc/systemd/system/dbus-org.bluez.service /etc/systemd/system/dbus-org.bluez.service_tmp
-#sed 's/\/bluetoothd/\/bluetoothd -C/g' /etc/systemd/system/dbus-org.bluez.service_tmp > /etc/systemd/system/dbus-org.bluez.service
-#cat /etc/systemd/system/dbus-org.bluez.service
+cat $BLUEZ_SERVICE_PATH | grep 'ExecStart=/usr/lib/bluetooth/bluetoothd -C'
+if ! [ $? -eq 0 ]; then
+	# Not fixed yet, fix it
+	echo "[INFO] Fix Bluetooth service by changing /etc/systemd/system/dbus-org.bluez.service"
+	mv /etc/systemd/system/dbus-org.bluez.service /etc/systemd/system/dbus-org.bluez.service_tmp
+	sed 's/\/bluetoothd/\/bluetoothd -C/g' /etc/systemd/system/dbus-org.bluez.service_tmp > /etc/systemd/system/dbus-org.bluez.service
+	cat $BLUEZ_SERVICE_PATH
+else
+	echo "[INFO] $BLUEZ_SERVICE_PATH has been already modified"
+fi
+
+echo "[INFO] adding Serial Port Profile to BLUEZ"
+sdptool add SP
+
+echo "[INFO] Restarting bluetooth service"
+systemctl daemon-reload
+systemctl restart bluetooth
