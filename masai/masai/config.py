@@ -88,7 +88,7 @@ class Configuration(object):
         cls.cracked_file = 'cracked.txt'
         cls.wordlist = None
         wordlists = [
-            '/usr/share/dict/wordlist.txt',
+            '/usr/share/dict/wordlist100k.txt',
             './wordlist.txt',
             './wordlist-top4800-probable.txt',  # Local file (ran from cloned repo)
             '/usr/share/dict/wordlist-top4800-probable.txt',  # setup.py with prefix=/usr
