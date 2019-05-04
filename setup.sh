@@ -7,7 +7,7 @@ VFEED_DB_PATH="$VFEED_DIR/vfeed.db"
 VENV_DIR="$MASAI_ROOT_DIR/venv"
 MASAI_SRC_DIR="$MASAI_ROOT_DIR/masai/"
 VFEED_SRC_DIR="$MASAI_ROOT_DIR/vfeed/"
-BLUEZ_SERVICE_PATH="/etc/systemd/system/dbus-org.bluez.service"
+BLUETOOTH_SERVICE_PATH="/lib/systemd/system/bluetooth.service"
 QR_CODE_GENERATOR_PATH=$MASAI_ROOT_DIR/qrcode_generator.py
 WORDLIST_PATH=$MASAI_ROOT_DIR/wordlists/wordlist.txt
 PASSWORD_PATH=$MASAI_ROOT_DIR/wordlists/password.txt
@@ -27,6 +27,9 @@ fi
 cp $WORDLIST_PATH /usr/share/dict/
 cp $PASSWORD_PATH /usr/share/dict/
 cp $LOGIN_PATH /usr/share/dict/
+
+# Enable bluetooth service
+systemctl enable bluetooth
 
 # Download vfeed.db first if it does not exist
 if ! [ -e $VFEED_DB_PATH ]
@@ -152,15 +155,17 @@ pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-hos
 echo "[INFO] Finish pwntools installation"
 
 # Fix Bluetooth service
-cat $BLUEZ_SERVICE_PATH | grep 'ExecStart=/usr/lib/bluetooth/bluetoothd -C'
+cat $BLUETOOTH_SERVICE_PATH | grep 'ExecStart=/usr/lib/bluetooth/bluetoothd -C'
 if ! [ $? -eq 0 ]; then
 	# Not fixed yet, fix it
-	echo "[INFO] Fix Bluetooth service by changing /etc/systemd/system/dbus-org.bluez.service"
-	mv $BLUEZ_SERVICE_PATH /etc/systemd/system/dbus-org.bluez.service_tmp
-	sed 's/\/bluetoothd/\/bluetoothd -C/g' /etc/systemd/system/dbus-org.bluez.service_tmp > $BLUEZ_SERVICE_PATH
-	cat $BLUEZ_SERVICE_PATH
+	echo "[INFO] Fix Bluetooth service by changing /lib/systemd/system/bluetooth.service"
+	cp $BLUETOOTH_SERVICE_PATH /lib/systemd/system/bluetooth.service.tmp
+	sed 's/\/bluetoothd/\/bluetoothd -C/g' /lib/systemd/system/bluetooth.service.tmp > $BLUETOOTH_SERVICE_PATH
+	cat $BLUETOOTH_SERVICE_PATH
+
 else
-	echo "[INFO] $BLUEZ_SERVICE_PATH has been already modified"
+	echo "[INFO] $BLUETOOTH_SERVICE_PATH
+ has been already modified"
 fi
 
 echo "[INFO] adding Serial Port Profile to BLUEZ"
