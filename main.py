@@ -243,7 +243,7 @@ class MasaiServer(object):
 		attack = None
 		print(target_router.encryption)
 		if target_router.encryption == StaticVar.ROUTER_TYPE_WEP:
-			attack = MyAttackWep(target_router)
+			attack = AttackWEP(target_router)
 		elif target_router.encryption == StaticVar.ROUTER_TYPE_WPA:
 			# Configuration.wordlist = './wordlist.txt'
 			attack = AttackWPA(target_router)

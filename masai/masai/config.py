@@ -88,7 +88,7 @@ class Configuration(object):
         cls.cracked_file = 'cracked.txt'
         cls.wordlist = None
         wordlists = [
-            '/usr/share/dict/wordlist100k.txt',
+            '/usr/share/dict/wordlist.txt',
             './wordlist.txt',
             './wordlist-top4800-probable.txt',  # Local file (ran from cloned repo)
             '/usr/share/dict/wordlist-top4800-probable.txt',  # setup.py with prefix=/usr
@@ -104,10 +104,10 @@ class Configuration(object):
                 break
 
         password_lists = [
-            '/usr/share/dict/password100.txt'
+            '/usr/share/dict/password.txt'
         ]
         username_lists = [
-            '/usr/share/dict/login_small.txt'
+            '/usr/share/dict/login.txt'
         ]
         cls.passlist = None
         cls.userlist = None
