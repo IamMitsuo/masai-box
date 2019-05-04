@@ -162,6 +162,7 @@ if ! [ $? -eq 0 ]; then
 	cp $BLUETOOTH_SERVICE_PATH /lib/systemd/system/bluetooth.service.tmp
 	sed 's/\/bluetoothd/\/bluetoothd -C/g' /lib/systemd/system/bluetooth.service.tmp > $BLUETOOTH_SERVICE_PATH
 	cat $BLUETOOTH_SERVICE_PATH
+	rm /lib/systemd/system/bluetooth.service.tmp
 
 else
 	echo "[INFO] $BLUETOOTH_SERVICE_PATH
