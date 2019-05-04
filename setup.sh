@@ -156,8 +156,8 @@ cat $BLUEZ_SERVICE_PATH | grep 'ExecStart=/usr/lib/bluetooth/bluetoothd -C'
 if ! [ $? -eq 0 ]; then
 	# Not fixed yet, fix it
 	echo "[INFO] Fix Bluetooth service by changing /etc/systemd/system/dbus-org.bluez.service"
-	mv /etc/systemd/system/dbus-org.bluez.service /etc/systemd/system/dbus-org.bluez.service_tmp
-	sed 's/\/bluetoothd/\/bluetoothd -C/g' /etc/systemd/system/dbus-org.bluez.service_tmp > /etc/systemd/system/dbus-org.bluez.service
+	mv $BLUEZ_SERVICE_PATH /etc/systemd/system/dbus-org.bluez.service_tmp
+	sed 's/\/bluetoothd/\/bluetoothd -C/g' /etc/systemd/system/dbus-org.bluez.service_tmp > $BLUEZ_SERVICE_PATH
 	cat $BLUEZ_SERVICE_PATH
 else
 	echo "[INFO] $BLUEZ_SERVICE_PATH has been already modified"
