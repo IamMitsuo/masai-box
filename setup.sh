@@ -78,9 +78,9 @@ else
 fi
 
 # Upgrade pip3 to the newest version
-echo "[INFO] Upgrade pip3 to the newest version"
-pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip --upgrade
-echo "[INFO] Finish Upgrade"
+# echo "[INFO] Upgrade pip3 to the newest version"
+# pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip --upgrade
+# echo "[INFO] Finish Upgrade"
 
 # Check if there exists venv directory, otherwise install venv
 if ! [ -e $VENV_DIR ]; then
@@ -115,13 +115,13 @@ echo "[INFO] venv has been activated"
 
 # Download debian packages required for python libraries
 echo "[INFO] Install required system packages"
-apt-get install -y libbluetooth-dev\
- python-dev\
- libglib2.0-dev\
- libboost-python-dev\
- libboost-thread-dev\
- libffi-dev\
- libssl-dev\
+apt-get install -y libbluetooth-dev \
+ python-dev \
+ libglib2.0-dev \
+ libboost-python-dev \
+ libboost-thread-dev \
+ libffi-dev \
+ libssl-dev
 
 if ! [ $? -eq 0 ]; then
 	echo "[ERROR] Unsuccefully install some packages" >&2
